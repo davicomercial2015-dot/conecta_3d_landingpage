@@ -1,15 +1,28 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Solution: React.FC = () => {
   const [currentImg, setCurrentImg] = useState(0);
   
   const carouselImages = [
-    "https://i.imgur.com/CejZBcA.png",
-    "https://i.imgur.com/Ut1TewG.png",
-    "https://i.imgur.com/gHjKEgX.png",
-    "https://i.imgur.com/ryoV8Aq.png"
+    "https://i.imgur.com/6IAi37A.png",
+    "https://i.imgur.com/ZD6xJyZ.png",
+    "https://i.imgur.com/w3w16v4.png",
+    "https://i.imgur.com/m6zSQCr.png",
+    "https://i.imgur.com/BYON6YZ.png",
+    "https://i.imgur.com/cZvadMA.png",
+    "https://i.imgur.com/rTnusnE.png",
+    "https://i.imgur.com/FaDFH5X.png",
+    "https://i.imgur.com/qXCegaS.png"
   ];
+
+  // Autoplay Logic
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImg((prev) => (prev + 1) % carouselImages.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [carouselImages.length]);
 
   const nextImg = () => {
     setCurrentImg((prev) => (prev + 1) % carouselImages.length);
@@ -70,18 +83,39 @@ const Solution: React.FC = () => {
             <div className="lg:w-1/2 w-full px-6 md:px-12">
               <div className="relative">
                 <div className="relative overflow-hidden rounded-2xl shadow-2xl border-2 border-white/20">
-                  <div className="aspect-square sm:aspect-[4/3] relative">
-                    <img src={carouselImages[currentImg]} className="w-full h-full object-cover" alt="Produto" />
+                  <div className="aspect-square sm:aspect-[4/3] relative bg-white/5">
+                    <img 
+                      src={carouselImages[currentImg]} 
+                      className="w-full h-full object-cover transition-all duration-700 ease-in-out" 
+                      alt="Demonstração do produto" 
+                    />
                   </div>
                 </div>
 
-                <button onClick={prevImg} className="absolute -left-5 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-md w-9 h-9 md:w-12 md:h-12 rounded-full flex items-center justify-center z-20 border border-white/20 active:scale-90">
+                <button 
+                  onClick={prevImg} 
+                  className="absolute -left-5 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-md w-9 h-9 md:w-12 md:h-12 rounded-full flex items-center justify-center z-20 border border-white/20 active:scale-90"
+                >
                   <svg className="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" /></svg>
                 </button>
 
-                <button onClick={nextImg} className="absolute -right-5 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-md w-9 h-9 md:w-12 md:h-12 rounded-full flex items-center justify-center z-20 border border-white/20 active:scale-90">
+                <button 
+                  onClick={nextImg} 
+                  className="absolute -right-5 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-md w-9 h-9 md:w-12 md:h-12 rounded-full flex items-center justify-center z-20 border border-white/20 active:scale-90"
+                >
                   <svg className="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" /></svg>
                 </button>
+
+                {/* Dots Indicators */}
+                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
+                  {carouselImages.map((_, idx) => (
+                    <button 
+                      key={idx} 
+                      onClick={() => setCurrentImg(idx)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentImg ? 'bg-white w-6' : 'bg-white/30 w-1.5'}`}
+                    ></button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

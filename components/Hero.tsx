@@ -1,15 +1,29 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Hero: React.FC = () => {
   const [currentImg, setCurrentImg] = useState(0);
   
   const carouselImages = [
-    "https://i.imgur.com/CejZBcA.png",
-    "https://i.imgur.com/Ut1TewG.png",
-    "https://i.imgur.com/gHjKEgX.png",
-    "https://i.imgur.com/ryoV8Aq.png"
+    "https://i.imgur.com/sUJkzNV.png",
+    "https://i.imgur.com/6IAi37A.png",
+    "https://i.imgur.com/ZD6xJyZ.png",
+    "https://i.imgur.com/w3w16v4.png",
+    "https://i.imgur.com/m6zSQCr.png",
+    "https://i.imgur.com/BYON6YZ.png",
+    "https://i.imgur.com/cZvadMA.png",
+    "https://i.imgur.com/rTnusnE.png",
+    "https://i.imgur.com/FaDFH5X.png",
+    "https://i.imgur.com/qXCegaS.png"
   ];
+
+  // Autoplay Logic
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImg((prev) => (prev + 1) % carouselImages.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [carouselImages.length]);
 
   const nextImg = () => {
     setCurrentImg((prev) => (prev + 1) % carouselImages.length);
@@ -45,14 +59,14 @@ const Hero: React.FC = () => {
           Troque o celular por <span className="text-[#008080]">200 Brinquedos</span> que seu filho mesmo constrói.
         </h1>
 
-        {/* CARROSSEL MOBILE - Mais compacto entre Headline e Subheadline */}
+        {/* CARROSSEL MOBILE */}
         <div className="block md:hidden mb-8 px-6 relative max-w-sm mx-auto">
           <div className="relative group">
             <div className="relative overflow-hidden rounded-2xl shadow-xl border-4 border-white aspect-square bg-gray-100">
               <img 
                 src={carouselImages[currentImg]} 
-                className="w-full h-full object-cover transition-opacity duration-500" 
-                alt="Demonstração" 
+                className="w-full h-full object-cover transition-all duration-700 ease-in-out" 
+                alt="Demonstração do produto" 
               />
               <div className="absolute bottom-3 right-3 bg-red-600 text-white px-2 py-1.5 rounded-lg font-black shadow-lg border-2 border-white animate-pulse z-30">
                 <span className="block text-[7px] uppercase leading-none opacity-90">Apenas</span>
